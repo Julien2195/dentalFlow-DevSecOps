@@ -1,23 +1,38 @@
-version: '3.9'
+networks:
+  dentaflow-network:
+    driver: bridge
 
 services:
+
   backend:
-    build: ./backend/dentaflow-app
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
     container_name: dentaflow-backend
-    ports:
-      - "8080:8080"
+    env_file:
+      - .env
     environment:
-      SPRING_DATASOURCE_CORE_URL: jdbc:postgresql://db_core:5432/core_db
-      SPRING_DATASOURCE_CORE_USERNAME: core_user
-      SPRING_DATASOURCE_CORE_PASSWORD: core_pass
-      SPRING_DATASOURCE_CUSTOMER_URL: jdbc:postgresql://db_customer:5432/customer_db
-      SPRING_DATASOURCE_CUSTOMER_USERNAME: customer_user
-      SPRING_DATASOURCE_CUSTOMER_PASSWORD: customer_pass
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILE}
+
+      SPRING_DATASOURCE_CORE_URL: jdbc:postgresql://db_core:5432/${CORE_DB_NAME}
+      SPRING_DATASOURCE_CORE_USERNAME: ${CORE_DB_USER}
+      SPRING_DATASOURCE_CORE_PASSWORD: ${CORE_DB_PASSWORD}
+
+      SPRING_DATASOURCE_CUSTOMER_URL: jdbc:postgresql://db_customer:5432/${CUSTOMER_DB_NAME}
+      SPRING_DATASOURCE_CUSTOMER_USERNAME: ${CUSTOMER_DB_USER}
+      SPRING_DATASOURCE_CUSTOMER_PASSWORD: ${CUSTOMER_DB_PASSWORD}
+
+      JWT_SECRET: ${JWT_SECRET}
+
     depends_on:
       - db_core
       - db_customer
+
     volumes:
       - dentaflow-files:/app/files
+
+    networks:
+      - dentaflow-network
 
   frontend:
     build: ./frontend
@@ -26,26 +41,32 @@ services:
       - "3000:80"
     depends_on:
       - backend
+    networks:
+      - dentaflow-network
 
   db_core:
     image: postgres:15-alpine
     container_name: dentaflow-db-core
     environment:
-      POSTGRES_DB: core_db
-      POSTGRES_USER: core_user
-      POSTGRES_PASSWORD: core_pass
+      POSTGRES_DB: ${CORE_DB_NAME}
+      POSTGRES_USER: ${CORE_DB_USER}
+      POSTGRES_PASSWORD: ${CORE_DB_PASSWORD}
     volumes:
       - db_core_data:/var/lib/postgresql/data
+    networks:
+      - dentaflow-network
 
   db_customer:
     image: postgres:15-alpine
     container_name: dentaflow-db-customer
     environment:
-      POSTGRES_DB: customer_db
-      POSTGRES_USER: customer_user
-      POSTGRES_PASSWORD: customer_pass
+      POSTGRES_DB: ${CUSTOMER_DB_NAME}
+      POSTGRES_USER: ${CUSTOMER_DB_USER}
+      POSTGRES_PASSWORD: ${CUSTOMER_DB_PASSWORD}
     volumes:
       - db_customer_data:/var/lib/postgresql/data
+    networks:
+      - dentaflow-network
 
 volumes:
   db_core_data:

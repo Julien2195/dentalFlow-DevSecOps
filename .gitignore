@@ -1,0 +1,117 @@
+# -----------------------------
+# IntelliJ / IDE
+# -----------------------------
+.idea/
+*.iml
+*.iws
+out/
+*.ipr
+
+# -----------------------------
+# VS Code (au cas où)
+# -----------------------------
+.vscode/
+
+# -----------------------------
+# Node / React
+# -----------------------------
+node_modules/
+build/
+dist/
+.env
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnp.*
+.cache/
+.next/
+.eslintcache
+*.tsbuildinfo
+coverage/
+
+# -----------------------------
+# Maven / Java
+# -----------------------------
+target/
+*.class
+*.jar
+*.war
+*.ear
+*.log
+*.jfr
+*.hprof
+*.db
+*.iml
+.mvn/timing.properties
+*.log.*
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+
+# -----------------------------
+# Docker
+# -----------------------------
+docker-compose.override.yml
+*.env
+docker-compose.*.yml
+*.dockerfile
+.dockerignore
+
+# -----------------------------
+# Spring Boot / temporary
+# -----------------------------
+spring-boot-devtools.properties
+*.h2.db
+*.mv.db
+hs_err_pid*
+replay_pid*
+
+# -----------------------------
+# Logs
+# -----------------------------
+logs/
+*.log
+*.out
+*.err
+
+# -----------------------------
+# Operating System
+# -----------------------------
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# -----------------------------
+# JetBrains / caches
+# -----------------------------
+.idea_modules/
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/dictionaries/
+.idea/caches/
+.idea/libraries/
+.idea/usage.statistics.xml
+.idea/jsLibraryMappings.xml
+.idea/vcs.xml
+.idea/dataSources/
+.idea/dataSources.ids
+.idea/sqlDataSources.xml
+.idea/dynamic.xml
+
+# -----------------------------
+# Optional / Misc
+# -----------------------------
+*.iml
+*.orig
+*.rej
+*.bak
+*.tmp
+*.old
+*.sw?

@@ -1,0 +1,53 @@
+version: '3.9'
+
+services:
+  backend:
+    build: ./backend/dentaflow-app
+    container_name: dentaflow-backend
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_CORE_URL: jdbc:postgresql://db_core:5432/core_db
+      SPRING_DATASOURCE_CORE_USERNAME: core_user
+      SPRING_DATASOURCE_CORE_PASSWORD: core_pass
+      SPRING_DATASOURCE_CUSTOMER_URL: jdbc:postgresql://db_customer:5432/customer_db
+      SPRING_DATASOURCE_CUSTOMER_USERNAME: customer_user
+      SPRING_DATASOURCE_CUSTOMER_PASSWORD: customer_pass
+    depends_on:
+      - db_core
+      - db_customer
+    volumes:
+      - dentaflow-files:/app/files
+
+  frontend:
+    build: ./frontend
+    container_name: dentaflow-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+
+  db_core:
+    image: postgres:15-alpine
+    container_name: dentaflow-db-core
+    environment:
+      POSTGRES_DB: core_db
+      POSTGRES_USER: core_user
+      POSTGRES_PASSWORD: core_pass
+    volumes:
+      - db_core_data:/var/lib/postgresql/data
+
+  db_customer:
+    image: postgres:15-alpine
+    container_name: dentaflow-db-customer
+    environment:
+      POSTGRES_DB: customer_db
+      POSTGRES_USER: customer_user
+      POSTGRES_PASSWORD: customer_pass
+    volumes:
+      - db_customer_data:/var/lib/postgresql/data
+
+volumes:
+  db_core_data:
+  db_customer_data:
+  dentaflow-files:

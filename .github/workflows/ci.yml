@@ -87,8 +87,8 @@ jobs:
   sonarqube:
     needs:
       - test-backend
-    if: ${{ secrets.SONAR_TOKEN != '' }}
     runs-on: ubuntu-latest
+    environment: VPS_SECRETS
     defaults:
       run:
         working-directory: backend
@@ -102,6 +102,7 @@ jobs:
           java-version: 21
           cache: maven
       - name: SonarQube scan
+        if: ${{ secrets.SONAR_TOKEN != '' }}
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: >

@@ -12,7 +12,7 @@ COPY ../dentaflow-app ./dentaflow-app
 RUN mvn clean package -DskipTests
 
 # Étape 2 : Runtime minimal
-FROM eclipse-temurin:20-jre-alpine
+FROM eclipse-temurin:25-jre-alpine
 WORKDIR /app
 
 # Ajouter CA certs et timezone

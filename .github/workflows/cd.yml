@@ -55,6 +55,7 @@ jobs:
           CUSTOMER_DB_USER: ${{ secrets.CUSTOMER_DB_USER }}
           CUSTOMER_DB_PASSWORD: ${{ secrets.CUSTOMER_DB_PASSWORD }}
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
           printf '%s\n' \
             "SPRING_PROFILE=$SPRING_PROFILE" \
@@ -65,6 +66,7 @@ jobs:
             "CUSTOMER_DB_USER=$CUSTOMER_DB_USER" \
             "CUSTOMER_DB_PASSWORD=$CUSTOMER_DB_PASSWORD" \
             "JWT_SECRET=$JWT_SECRET" \
+            "SONAR_TOKEN=$SONAR_TOKEN" \
           | ssh "${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}" "cat > /home/${{ secrets.VPS_USER }}/dentaflow/.env && chmod 600 /home/${{ secrets.VPS_USER }}/dentaflow/.env"
 
       - name: Deploy

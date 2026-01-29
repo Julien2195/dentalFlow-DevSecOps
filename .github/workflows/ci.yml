@@ -89,6 +89,8 @@ jobs:
       - test-backend
     runs-on: ubuntu-latest
     environment: VPS_SECRETS
+    env:
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
     defaults:
       run:
         working-directory: backend
@@ -102,9 +104,7 @@ jobs:
           java-version: 21
           cache: maven
       - name: SonarQube scan
-        if: ${{ secrets.SONAR_TOKEN != '' }}
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        if: ${{ env.SONAR_TOKEN != '' }}
         run: >
           mvn -B -DskipTests verify
           org.sonarsource.scanner.maven:sonar-maven-plugin:3.10.0.2594:sonar

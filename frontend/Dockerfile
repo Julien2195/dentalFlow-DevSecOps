@@ -16,8 +16,8 @@ RUN npm run build   # juste next build, plus next export
 # ======================
 FROM nginx:alpine
 
-COPY --from=build /app/.next /usr/share/nginx/html/.next
-COPY --from=build /app/public /usr/share/nginx/html/public
+# Next.js "output: export" generates a fully static site in /app/out
+COPY --from=build /app/out /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80

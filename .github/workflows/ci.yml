@@ -83,17 +83,3 @@ jobs:
           cache: maven
       - name: Run tests
         run: mvn -B test
-
-  deploy:
-    needs:
-      - lint-frontend
-      - lint-backend
-      - test-frontend
-      - test-backend
-    if: github.ref == 'refs/heads/main'
-    runs-on: self-hosted
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Deploy (local)
-        run: docker compose up -d --build

@@ -1,5 +1,5 @@
 # Étape 1 : Build Maven
-FROM maven:3.9.2-eclipse-temurin-20 AS build
+FROM maven:3.9.11-eclipse-temurin-25 AS build
 WORKDIR /app
 
 # Copier les pom.xml et modules
